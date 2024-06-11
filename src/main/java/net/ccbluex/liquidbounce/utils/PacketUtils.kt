@@ -21,6 +21,8 @@ object PacketUtils : MinecraftInstance(), Listenable {
 
     val queuedPackets = mutableListOf<Packet<*>>()
 
+    val packets = ArrayList<Packet<INetHandlerPlayServer>>()
+
     @EventTarget(priority = 2)
     fun onTick(event: TickEvent) {
         for (entity in mc.theWorld.loadedEntityList) {
