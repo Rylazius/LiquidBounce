@@ -161,8 +161,8 @@ object PacketUtils : MinecraftInstance(), Listenable {
     fun handlePackets(vararg packets: Packet<*>) =
         packets.forEach { handlePacket(it) }
 
-    fun handlePacket(packet: Packet<*>?) {
-        runCatching { (packet as Packet<INetHandlerPlayClient>).processPacket(mc.netHandler) }.onSuccess {
+    fun handlePacket(packet: Packet<*>?) =
+        runCatching { (packet as Packet<INetHandlerPlayClient>).processPacket(mc.netHandler) }
             PPSCounter.registerType(PPSCounter.PacketType.RECEIVED)
         }
     }
