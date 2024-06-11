@@ -17,6 +17,7 @@ import net.minecraft.network.play.INetHandlerPlayServer
 import net.minecraft.network.play.server.*
 import kotlin.math.roundToInt
 
+// TODO: Remove annotations once all modules are converted to kotlin.
 object PacketUtils : MinecraftInstance(), Listenable {
 
     val queuedPackets = mutableListOf<Packet<*>>()
@@ -38,7 +39,6 @@ object PacketUtils : MinecraftInstance(), Listenable {
             }
         }
     }
-
     @EventTarget(priority = 2)
     fun onPacket(event: PacketEvent) {
         val packet = event.packet
@@ -88,7 +88,6 @@ object PacketUtils : MinecraftInstance(), Listenable {
                 }
         }
     }
-
     @EventTarget(priority = -5)
     fun onGameLoop(event: GameLoopEvent) {
         synchronized(queuedPackets) {
@@ -102,19 +101,10 @@ object PacketUtils : MinecraftInstance(), Listenable {
             queuedPackets.clear()
         }
     }
-
-    @EventTarget(priority = -1)
-    fun onDisconnect(event: WorldEvent) {
-        if (event.worldClient == null) {
-            synchronized(queuedPackets) {
-                queuedPackets.clear()
-            }
-        }
-    }
-
     override fun handleEvents() = true
 
     @JvmStatic
+    @JvmOverloads
     fun sendPacket(packet: Packet<*>, triggerEvent: Boolean = true) {
         if (triggerEvent) {
             mc.netHandler?.addToSendQueue(packet)
@@ -122,8 +112,6 @@ object PacketUtils : MinecraftInstance(), Listenable {
         }
 
         val netManager = mc.netHandler?.networkManager ?: return
-
-        PPSCounter.registerType(PPSCounter.PacketType.SEND)
         if (netManager.isChannelOpen) {
             netManager.flushOutboundQueue()
             netManager.dispatchPacket(packet, null)
@@ -152,6 +140,7 @@ object PacketUtils : MinecraftInstance(), Listenable {
             throw IllegalArgumentException("Unable to match packet type to handle: ${packet.javaClass}")
         }
     }
+    
 
     @JvmStatic
     @JvmOverloads
@@ -163,9 +152,6 @@ object PacketUtils : MinecraftInstance(), Listenable {
 
     fun handlePacket(packet: Packet<*>?) =
         runCatching { (packet as Packet<INetHandlerPlayClient>).processPacket(mc.netHandler) }
-            PPSCounter.registerType(PPSCounter.PacketType.RECEIVED)
-        }
-    }
 
     val Packet<*>.type
         get() = when (this.javaClass.simpleName[0]) {
