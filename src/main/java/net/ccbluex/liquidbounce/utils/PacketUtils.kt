@@ -135,6 +135,22 @@ object PacketUtils : MinecraftInstance(), Listenable {
     }
 
     @JvmStatic
+    fun sendPacketNoEvent(packet: Packet<INetHandlerPlayServer>) {
+        packets.add(packet)
+        mc.netHandler.addToSendQueue(packet)
+    }
+
+    @JvmStatic
+    fun handlePacket(packet: Packet<INetHandlerPlayClient?>) {
+        val netHandler = mc.netHandler
+        if (packet is S38PacketPlayerListItem) {
+            netHandler.handlePlayerListItem(packet)
+        } else {
+            throw IllegalArgumentException("Unable to match packet type to handle: ${packet.javaClass}")
+        }
+    }
+
+    @JvmStatic
     fun sendPackets(vararg packets: Packet<*>, triggerEvents: Boolean = true) =
         packets.forEach { sendPacket(it, triggerEvents) }
 
