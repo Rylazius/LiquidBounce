@@ -57,8 +57,8 @@ object LiquidBounce {
      *
      * This has all of the basic information.
      */
-    const val CLIENT_NAME = "LiquidBounce"
-    const val CLIENT_AUTHOR = "CCBlueX"
+    const val CLIENT_NAME = "bu cac"
+    const val CLIENT_AUTHOR = "Cthamtuirn"
     const val CLIENT_CLOUD = "https://cloud.liquidbounce.net/LiquidBounce"
     const val CLIENT_WEBSITE = "liquidbounce.net"
 
