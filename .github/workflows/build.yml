@@ -25,5 +25,5 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: rinbounce
-          path: build/libs/rinbounce.jar
+          name: liquidbounce
+          path: build/libs/liquidbounce.jar
