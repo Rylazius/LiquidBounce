@@ -85,6 +85,7 @@ object LiquidBounce {
     val eventManager = EventManager
     val fileManager = FileManager
     val scriptManager = ScriptManager
+    lateinit var combatManager: CombatManager
 
     // HUD & ClickGUI
     val hud = HUD
