@@ -22,8 +22,12 @@ jobs:
           job-id: jdk8
           arguments: build --no-build-cache
           gradle-version: wrapper
+      - name: Pre-Upload Artifacr
+        run: |
+         cd build/libs
+         zip -r liquidbounce.zip *
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
           name: Liquidbounce
-          path: build/libs/liquidbounce.jar
+          path: build/libs/liquidbounce.zip
