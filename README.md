@@ -50,5 +50,5 @@ We appreciate contributions. So if you want to support us, feel free to make cha
 
 If you have experience in one or more of these fields, we would highly appreciate your support.
 
-## Stats
+## tr
 ![Alt](https://repobeats.axiom.co/api/embed/53a8b71ca387182c6f12a1c98a88edbe0a7bae99.svg "Repobeats analytics image")
